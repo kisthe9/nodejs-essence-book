@@ -27,7 +27,7 @@
 | 背压 | write 返回 false + 'drain' 组成的反向刹车信号，可传导至 TCP 窗口 | 第 7 章 |
 | pipeline | 带错误传播与全链销毁的流组装函数，生产首选 | 第 7 章 |
 | emit | 同步 for 循环分发监听器；异步性来自"何时被调用" | 第 8 章 |
-| AsyncLocalStorage | 跨异步边界携带请求上下文的标准机制 | 第 8 章 |
+| AsyncLocalStorage | 跨异步边界携带请求上下文的标准机制 | 第 8、12 章 |
 | Environment | "一个 Node.js 实例"的 C++ 真身：事件循环 + 子系统 + 清理队列 | 第 9 章 |
 | Realm | Context + process + 模块缓存的打包；主 Realm 住着你的代码 | 第 9 章 |
 | primordials | 启动时保存的内建对象纯净副本，防原型污染 | 第 10 章 |
@@ -35,6 +35,10 @@
 | beforeExit / exit | 循环空后的挽留机会（可多次）/ 只许同步代码的遗言时刻 | 第 10 章 |
 | 结构化克隆 | postMessage 跨 Isolate 传值的序列化复制机制 | 第 11 章 |
 | Transferable / SharedArrayBuffer | 内存过户（零拷贝）/ 唯一真共享内存（需 Atomics） | 第 11 章 |
+| asyncId / triggerAsyncId | 异步资源的"我是谁"/"谁创建了我"，织成异步因果族谱 | 第 12 章 |
+| AsyncWrap | C++ 侧异步资源基类，签发 asyncId 族谱的出生证明 | 第 12 章 |
+| async_hooks | 异步族谱的观测 API（init/before/after/destroy）；代价不低，留给诊断工具 | 第 12 章 |
+| AsyncContextFrame | 把上下文帧挂进 Promise 延续体的第二代实现，免回溯、默认启用 | 第 12 章 |
 
 ## B. 易混淆速辨
 
@@ -52,6 +56,8 @@
 | "process 是全局魔法对象" | 是 Environment 的 JS 投影，启动第③步才诞生 | 第 9、10 章 |
 | "process.exit() 是正常退出方式" | 是拉闸；会丢异步缓冲。正道是撤掉活跃句柄 | 第 10 章 |
 | "Worker 之间共享变量" | 堆隔离；postMessage 是克隆，共享只有 SharedArrayBuffer | 第 11 章 |
+| "AsyncLocalStorage 能自动跨线程传播" | store 的传播半径是一个 Environment；跨 Worker/子进程需随消息携带 + 对侧重新 run | 第 12 章 |
+| "async_hooks 适合业务代码日常使用" | 它是诊断工具的地基：插桩开销与内存代价都明显，应用层用 AsyncLocalStorage | 第 12 章 |
 
 ## C. 七机制 → 常见子系统映射
 
@@ -79,4 +85,4 @@
 
 ---
 
-[← 终章：万物归一](./ch12-epilogue.md) | [返回目录](./README.md)
+[← 终章：万物归一](./ch13-epilogue.md) | [返回目录](./README.md)

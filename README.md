@@ -46,15 +46,16 @@
 
 ### 第四部 容器：生命与繁衍
 
-> 零件都齐了，谁把它们装起来？这一部讲运行时容器的结构、生命周期与多核扩展。
+> 零件都齐了，谁把它们装起来？这一部讲运行时容器的结构、生命周期、多核扩展，以及穿越这一切的异步因果链。
 
 - [第 9 章 运行时容器](./part-4-container/ch09-runtime-container.md) —— Isolate、Environment、Realm 与 process 的真身
 - [第 10 章 生命周期](./part-4-container/ch10-lifecycle.md) —— 从 Bootstrap 到优雅退出
 - [第 11 章 多核之路](./part-4-container/ch11-multicore.md) —— Worker Threads 与 Cluster：复制容器，而非共享内存
+- [第 12 章 异步上下文：穿越边界的因果链](./part-4-container/ch12-async-context.md) —— async_hooks 族谱与 AsyncLocalStorage：串联异步回调、线程与进程
 
 ### 终章与附录
 
-- [第 12 章 万物归一：一个请求的一生](./ch12-epilogue.md) —— 全书机制串成一条线，以及可以带走的设计原则
+- [第 13 章 万物归一：一个请求的一生](./ch13-epilogue.md) —— 全书机制串成一条线，以及可以带走的设计原则
 - [附录](./appendix.md) —— 术语表、易混淆速辨、延伸阅读
 
 ## 全书地图
@@ -66,7 +67,7 @@
       │ 第四部（容器）                    第三部（血液）           │
       └── Environment 容器 <──装载── EventEmitter <──分发── Stream/Buffer <──承载── fd
                 │
-                └──> 生命周期 ──> 多核（复制容器）──> 终章：一个请求的一生
+                └──> 生命周期 ──> 多核（复制容器）──> 异步上下文（串联边界）──> 终章：一个请求的一生
 ```
 
 ## 如何阅读
