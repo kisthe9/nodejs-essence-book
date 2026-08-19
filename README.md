@@ -49,7 +49,7 @@
 > 零件都齐了，谁把它们装起来？这一部讲运行时容器的结构、生命周期、多核扩展，以及穿越这一切的异步因果链。
 
 - [第 9 章 运行时容器](./part-4-container/ch09-runtime-container.md) —— Isolate、Environment、Realm 与 process 的真身
-- [第 10 章 生命周期](./part-4-container/ch10-lifecycle.md) —— 从 Bootstrap 到优雅退出
+- [第 10 章 生命周期](./part-4-container/ch10-lifecycle.md) —— 从 Bootstrap 到优雅退出；process 的诞生与模块火把交接
 - [第 11 章 多核之路](./part-4-container/ch11-multicore.md) —— Worker Threads 与 Cluster：复制容器，而非共享内存
 - [第 12 章 异步上下文：穿越边界的因果链](./part-4-container/ch12-async-context.md) —— async_hooks 族谱与 AsyncLocalStorage：串联异步回调、线程与进程
 

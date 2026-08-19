@@ -37,6 +37,7 @@
 | Realm | Context + process + 模块缓存的打包；主 Realm 住着你的代码 | 第 9 章 |
 | primordials | 启动时保存的内建对象纯净副本，防原型污染 | 第 10 章 |
 | 快照（snapshot） | 构建期预执行引导脚本后序列化的 V8 堆，启动时直接恢复 | 第 10 章 |
+| 包壳（wrapper） | 模块源码外的函数壳：用户模块五参；内置模块多 internalBinding 与 primordials 两参 | 第 2、10 章 |
 | beforeExit / exit | 循环空后的挽留机会（可多次）/ 只许同步代码的遗言时刻 | 第 10 章 |
 | 结构化克隆 | postMessage 跨 Isolate 传值的序列化复制机制 | 第 11 章 |
 | Transferable / SharedArrayBuffer | 内存过户（零拷贝）/ 唯一真共享内存（需 Atomics） | 第 11 章 |
@@ -60,6 +61,8 @@
 | "highWaterMark 是缓冲上限" | 只是建议水位；无视 write 返回 false 照样 OOM | 第 7 章 |
 | "uncaughtException 可以用来续命" | 只该记录现场 + 优雅退出；进程状态已不可信 | 第 8、10 章 |
 | "process 是全局魔法对象" | 是 Environment 的 JS 投影，启动第③步才诞生 | 第 9、10 章 |
+| "require 是全局函数" | 每个模块一份私有 require，诞生时记住本模块位置 | 第 2、10 章 |
+| "process.env 是启动时的一份拷贝" | 是进程环境表的实时代理，读写直达 getenv/setenv | 第 10 章 |
 | "process.exit() 是正常退出方式" | 是拉闸；会丢异步缓冲。正道是撤掉活跃句柄 | 第 10 章 |
 | "Worker 之间共享变量" | 堆隔离；postMessage 是克隆，共享只有 SharedArrayBuffer | 第 11 章 |
 | "AsyncLocalStorage 能自动跨线程传播" | store 的传播半径是一个 Environment；跨 Worker/子进程需随消息携带 + 对侧重新 run | 第 12 章 |

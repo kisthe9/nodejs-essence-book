@@ -1,6 +1,6 @@
 # 第 10 章 生命周期：从 Bootstrap 到优雅退出
 
-> **本章问题**：`node app.js` 回车之后、你的第一行代码之前，那几十毫秒里发生了什么？进程的最后一口气（退出前）又能做什么、不能做什么？
+> **本章问题**：`node app.js` 回车之后、你的第一行代码之前，那几十毫秒里发生了什么——process 是谁造的？app.js 又是被谁、用什么方式包起来执行的？进程的最后一口气（退出前）又能做什么、不能做什么？
 
 ## 10.1 出生：装配流水线
 
@@ -31,7 +31,7 @@ node app.js
 ⑤ 进入事件循环（第 3 章的心脏开始跳动）
 ```
 
-两个步骤值得放大看。
+装配线上，这几站值得放大看。
 
 ### 加固内建：primordials
 
@@ -43,6 +43,65 @@ Array.prototype.push = function () { /* 被劫持 */ };
 ```
 
 如果 Node 内部实现也用 `arr.push()`，就会被这种改写波及甚至攻击。因此内部代码一律使用启动时抄好的原始副本，与用户的原型改写彻底隔离。这是"运行时自我保护"的教科书案例——**平台代码不能信任它所承载的应用代码**。
+
+### process 的诞生：空壳、装配、挂全局
+
+③c 这一小步拆开，是三步生长：
+
+```
+① C++ 立空壳（src/node.cc 建环境时）
+   一个几乎是白板的 JS 对象被造出来，
+   登记为环境的 process_object()——投影的锚点
+        │
+② 引导脚本逐件装配（lib/internal/process/pre_execution.js 等）
+   ├─ 并入 C++ 方法：pid / kill / umask / chdir / exit……
+   │   全部经 internalBinding('process_methods') 投影上来
+   ├─ 切换原型：process 的原型被换成 EventEmitter.prototype
+   │   ——process.on('exit') 的能力从这里来
+   ├─ 挂数据：argv 是命令行解析好的成品；
+   │   env 不是启动时的一份拷贝，而是进程环境表的实时代理
+   │   （读写直达 getenv/setenv，src/node_env_var.cc）
+   └─ stdio 做成惰性 getter：第一次碰 process.stdout，
+      才按 fd 1 的真身（TTY？管道？文件？见第 5 章）决定同步写还是异步写
+        │
+③ 挂全局：globalThis.process 就位，用户代码可见
+```
+
+第 9 章的结论在此落地：**process 是 Environment 的 JS 投影**。它身上几乎每样东西最终都转发给 C++ 侧的环境对象——所以 process.exit() 等于拉整个环境的电闸（10.3 节）。也所以 process 的面貌随启动方式（主脚本/REPL/Worker，装配线 ③d）而微调：装配清单不同。
+
+### 模块加载：火把交接的位置
+
+装配线第 ④ 步是全书最容易被低估的一次交接。**主模块是第一个被"用户待遇"加载的模块**——在它之前，加载器服务的一直是门内自己人：
+
+```
+引导期：内置加载器（lib/internal/bootstrap/loaders.js）
+        加载引导脚本与 lib/ 全家桶
+        ——包壳参数里带 internalBinding 与 primordials
+   │
+   ▼  ← ④：火把交接
+主模块：CJS 加载器（lib/internal/modules/cjs/loader.js）
+        第一次为你的代码服务
+        ——包壳参数是 exports/require/module/__filename/__dirname
+   │
+   ▼
+你的代码里每一次 require：同一台 CJS 加载器，
+但 require 是按"本模块位置"现场制作的私有副本
+```
+
+加载的五步流水线（解析 → 缓存 → 建模块 → 包壳执行 → 登记返回）第 2 章已经走过，这里只补两个在启动视角下才看得清的事实。
+
+**其一，require 是私有的**。每个模块拿到的那本 require，在制作时记住了本模块的位置：相对路径从它算起，node_modules 从它所在目录逐级上溯。所以"require 相对谁"的答案是——相对制作这本 require 时所属的那个模块。它不是全局函数，是加载器按模块现场发放的。
+
+**其二，同一个壳，两本通行证**。内置模块与用户模块都被包进函数壳，但参数名单不同：
+
+| | 内置 JS 模块（lib/*.js） | 用户模块 |
+|---|---|---|
+| 加载器 | 内置加载器 | CJS 加载器 |
+| 源码来源 | 构建期打包进二进制，零磁盘 I/O | 运行时从磁盘读取 |
+| 包壳参数 | exports, require, module, **internalBinding, primordials** | exports, require, module, __filename, __dirname |
+| 缓存 | 内置注册表，编译期名单即定 | Module._cache，首次加载才登记 |
+
+第 2 章的门在此闭环：**权限的差异就是函数签名的差异**。内置模块的壳多出两个参数——internalBinding 让它穿门直达 C++；primordials 则把上一节"抄好的原始副本"直接发放到每个内置模块手里。用户模块的壳里没有这两个参数，所以你的代码无论怎么写都摸不到 internalBinding：不是被运行时拦下，是出生证上就没发这本通行证。
 
 ### 快照：为什么启动这么快
 
@@ -137,6 +196,9 @@ K8s 的标准剧本是"SIGTERM → 等宽限期（默认 30s）→ SIGKILL"。�
 3. **beforeExit 可挽留进程（可能多次触发）；exit 只许同步遗言。**
 4. **process.exit 是拉闸**——异步缓冲区里的数据说没就没；优雅退出 = 撤活跃句柄 + 自然死亡。
 5. **SIGTERM 是生产必修**——在编排系统宽限期内完成收尾，否则 SIGKILL 不容商量。
+6. **process 三步长成**：C++ 空壳 → 引导脚本装配（C++ 方法并入、原型切成 EventEmitter、env 实时代理、stdio 惰性 getter）→ 挂全局；它是 Environment 的投影。
+7. **主模块是火把交接点**——此前一直是内置加载器在门内服务；此后 CJS 加载器接管，每个模块拿到私有 require，解析起点就是本模块。
+8. **权限即签名**——内置模块的包壳比用户模块多 internalBinding 与 primordials 两个参数；门内门外，出生即定。
 
 ## 下一章引子
 
