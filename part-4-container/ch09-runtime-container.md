@@ -30,7 +30,7 @@
 | 容器 | 来自谁 | 装什么 |
 |------|--------|--------|
 | Isolate | V8 | JS 堆、GC——语言层的隔离单位 |
-| Environment | Node.js（`src/env.cc`） | 事件循环、资源清理队列、各子系统——**"一个 Node 实例"的实体** |
+| Environment | Node.js（`src/env.cc`） | 事件循环、资源清理队列、各子系统——"**一个 Node 实例"的实体** |
 | Realm | Node.js | process 对象、模块缓存——一个 Context 里的运行状态 |
 
 **Environment 才是"一个 Node.js"的真身。** V8 只提供了 JS 的执行与内存（Isolate），Node 把自己的一切——心脏（事件循环）、门（Binding 注册表引用）、生命周期管理——全部聚合进 Environment 这个 C++ 对象。所谓"启动一个 Node 实例"，就是创建一个 Environment 并把它跑起来。

@@ -26,7 +26,7 @@
 > JS 单线程是全书的第一因。这一部讲清楚这个约束从哪来（V8），以及被约束的 JS 如何突围（Binding）。
 
 - [第 1 章 单线程的枷锁与馈赠](./part-1-constraint/ch01-single-thread.md) —— V8 如何执行 JS，单线程为何是一切设计的原点
-- [第 2 章 沙箱之外](./part-1-constraint/ch02-beyond-sandbox.md) —— 模块系统组织代码，Binding 打通操作系统
+- [第 2 章 沙箱之外](./part-1-constraint/ch02-beyond-sandbox.md) —— 模块系统组织代码，Binding 打通操作系统，回调在此封装
 
 ### 第二部 心跳：让单线程活起来
 
@@ -39,7 +39,7 @@
 
 > 心脏泵的是血。这一部讲数据在 Node.js 里以什么形态存在（fd、Buffer），如何流动（Stream），由谁分发（EventEmitter）。
 
-- [第 5 章 fd：内核眼中的万物](./part-3-data/ch05-fd.md) —— 文件、Socket、管道为什么是同一个东西
+- [第 5 章 fd：内核眼中的万物](./part-3-data/ch05-fd.md) —— 文件、Socket、管道为什么是同一个东西；stdio 的由来与 IPC 接力
 - [第 6 章 Buffer：跨越两个世界的数据货币](./part-3-data/ch06-buffer.md) —— JS 与内核之间的零拷贝字节容器
 - [第 7 章 Stream：有限内存处理无限数据](./part-3-data/ch07-stream.md) —— 分块、缓冲与背压
 - [第 8 章 EventEmitter：事件驱动的字面实现](./part-3-data/ch08-eventemitter.md) —— 同步分发、error 铁律与异步上下文
@@ -68,6 +68,12 @@
       └── Environment 容器 <──装载── EventEmitter <──分发── Stream/Buffer <──承载── fd
                 │
                 └──> 生命周期 ──> 多核（复制容器）──> 异步上下文（串联边界）──> 终章：一个请求的一生
+```
+
+暗线（一个回调的一生，穿越四道边界）：
+
+```
+ [2] 封装·语言边界 → [3] 瓣膜放行·时间边界 → [5] 管道接力·进程边界 → [12] 验照·因果边界
 ```
 
 ## 如何阅读
