@@ -1,8 +1,8 @@
-# 第 7 章 Stream：有限内存处理无限数据
+# 第 8 章 Stream：有限内存处理无限数据
 
 > **本章问题**：一个 2GB 的文件、一条永不结束的 TCP 连接——数据比内存大、甚至没有尽头时，程序怎么处理它？以及：上游生产比下游消费快时，多出来的数据堆在哪？
 
-## 7.1 从一次内存爆炸说起
+## 8.1 从一次内存爆炸说起
 
 一个文件下载服务最直观的写法：
 
@@ -26,12 +26,12 @@ http.createServer((req, res) => {
 // 内存占用：每连接几十 KB，与文件大小无关
 ```
 
-fd 给了我们字节接口（第 5 章），Buffer 给了字节容器（第 6 章），Stream 在两者之上补齐五种能力：**分块、缓冲、背压、统一接口、标准事件**。前四个本章讲，"标准事件"的机制是下一章的主角。
+fd 给了我们字节接口（第 6 章），Buffer 给了字节容器（第 7 章），Stream 在两者之上补齐五种能力：**分块、缓冲、背压、统一接口、标准事件**。前四个本章讲，"标准事件"的机制是下一章的主角。
 
-## 7.2 四种流，一个家族
+## 8.2 四种流，一个家族
 
 ```
-EventEmitter                ← 所有流都是事件发射器（第 8 章）
+EventEmitter                ← 所有流都是事件发射器（第 9 章）
     └── Stream
           ├── Readable      数据的源头       fs.createReadStream, http 请求体
           ├── Writable      数据的去处       fs.createWriteStream, http 响应
@@ -44,7 +44,7 @@ EventEmitter                ← 所有流都是事件发射器（第 8 章）
 
 每个流内部都有一个缓冲区和一条水位线（`highWaterMark`，字节流默认 64KB 或 16KB，视流类型而定）。缓冲区是"分块"与"背压"之间的减震器。
 
-## 7.3 背压：Stream 的灵魂
+## 8.3 背压：Stream 的灵魂
 
 ### 问题
 
@@ -113,7 +113,7 @@ for (const chunk of chunks) {
 
 内部缓冲区**没有硬上限**——highWaterMark 只是"建议停"的水位线，write 永远收下数据。所以"Stream 也会 OOM"的事故，几乎全是无视 false 造成的。
 
-## 7.4 组装流水线
+## 8.4 组装流水线
 
 ```js
 const { pipeline } = require('stream/promises');
@@ -129,7 +129,7 @@ await pipeline(
 
 流水线上每个节点间流动的 chunk，就是上一章的 Buffer（objectMode 除外）。Buffer 管"数据是什么"，Stream 管"数据怎么流"——两章在此合拢。
 
-## 7.5 本质小结
+## 8.5 本质小结
 
 > **一句话本质**：Stream 把"数据是一块"换成"数据是一列"，再用背压让整条流水线自动降速到最慢一环的速度——内存占用从此与数据总量无关，只与水位线有关。
 
@@ -151,4 +151,4 @@ await pipeline(
 
 ---
 
-[← 上一章：Buffer](./ch06-buffer.md) | [下一章：EventEmitter →](./ch08-eventemitter.md)
+[← 上一章：Buffer](./ch07-buffer.md) | [下一章：EventEmitter →](./ch09-eventemitter.md)
