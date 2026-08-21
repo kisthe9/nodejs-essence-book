@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="440" viewBox="0 0 820 440" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="440" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">BaseObject · JS 与 C++ 对象的双向绑定</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">BASEOBJECT BINDING</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="60" y="96" width="300" height="250" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="76" y="120" font-size="10.5" fill="#7a8296" letter-spacing="2.5">JS 世界</text>
+
+<rect x="470" y="96" width="290" height="250" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="486" y="120" font-size="10.5" fill="#7a8296" letter-spacing="2.5">C++ 世界</text>
+
+<line x1="410" y1="96" x2="410" y2="346" stroke="#c9cfdd" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="84" y="140" width="252" height="38" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="210.0" y="163.5" text-anchor="middle" font-size="13" fill="#1d2740" font-weight="700">Socket 对象</text>
+<rect x="84" y="196" width="252" height="34" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="210.0" y="217.5" text-anchor="middle" font-size="11.5" fill="#1d2740">内部字段[0] · 类型标记</text>
+<rect x="84" y="244" width="252" height="34" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="210.0" y="265.5" text-anchor="middle" font-size="11.5" fill="#1d2740">内部字段[1] · C++ 指针</text>
+<rect x="494" y="140" width="242" height="150" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="615" y="172" font-size="13" fill="#1d2740" font-weight="700" text-anchor="middle">TCPWrap 实例</text>
+<text x="615" y="204" font-size="11.5" fill="#7a8296" text-anchor="middle">（持有真实的</text>
+<text x="615" y="226" font-size="11.5" fill="#7a8296" text-anchor="middle">libuv TCP 句柄）</text>
+<line x1="340" y1="213" x2="488" y2="213" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="340" y1="261" x2="488" y2="261" stroke="#e8862e" stroke-width="1.4" fill="none" marker-end="url(#ara)"/>
+<path d="M 615 294 V 386 H 210 V 352" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="414" y="378" font-size="11.5" fill="#7a8296" text-anchor="middle">persistent 句柄（反向引用）</text>
+</svg>

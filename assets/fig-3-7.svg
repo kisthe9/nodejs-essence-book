@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="540" viewBox="0 0 820 540" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="540" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">穿门之旅 · require('http')</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">CROSSING THE DOOR</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="70" y="100" width="280" height="40" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="210.0" y="124.5" text-anchor="middle" font-size="12.5" fill="#1d2740" font-weight="700">require('http')</text>
+<path d="M 86 140 V 152.0 H 126 V 164" fill="none" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="110" y="164" width="280" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="250.0" y="188.5" text-anchor="middle" font-size="12" fill="#1d2740">http.js ──require──▶ net.js</text>
+<path d="M 126 204 V 216.0 H 166 V 228" fill="none" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="150" y="228" width="280" height="40" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="290.0" y="252.5" text-anchor="middle" font-size="12.5" fill="#ffffff" font-weight="700">internalBinding('tcp_wrap')</text>
+<path d="M 166 268 V 280.0 H 206 V 292" fill="none" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="292" width="280" height="40" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="330.0" y="316.5" text-anchor="middle" font-size="12.5" fill="#1d2740" font-weight="700">new TCP()</text>
+<path d="M 206 332 V 424 M 206 376 H 226 M 206 424 H 226" fill="none" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="230" y="356" width="300" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="380.0" y="380.5" text-anchor="middle" font-size="11" fill="#1d2740">初始化 libuv 的 TCP 句柄（uv_tcp_init）</text>
+<rect x="230" y="404" width="300" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="380.0" y="428.5" text-anchor="middle" font-size="11.5" fill="#1d2740">通过内部字段与 JS 对象互相绑定</text>
+<rect x="70" y="476" width="200" height="40" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="170.0" y="500.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">server.listen(8080)</text>
+<path d="M 170 476 V 462 H 380 V 450" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="774" y="124" text-anchor="end" font-size="11" fill="#7a8296">← 门内：CJS 五步加载</text>
+<text x="774" y="188" text-anchor="end" font-size="11" fill="#7a8296">← 内置模块相互依赖，纯 JS</text>
+<text x="774" y="252" text-anchor="end" font-size="11" fill="#c56a15" font-weight="700">← 穿门：拿到 C++ 导出</text>
+<text x="774" y="316" text-anchor="end" font-size="11" fill="#7a8296">← C++ 侧创建 TCPWrap 实例</text>
+<text x="774" y="500" text-anchor="end" font-size="11" fill="#7a8296">← 后续调用沿着绑定直达 C++</text>
+</svg>

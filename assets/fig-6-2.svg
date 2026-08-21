@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="476" viewBox="0 0 820 476" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="476" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">重定向：程序登场前换掉它桌上的号码牌</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">SHELL REDIRECT · DUP2</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="92" width="728" height="46" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="105.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="119.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="90" y="120.0" font-size="13.5" fill="#1d2740">shell fork 出子进程<tspan fill="#7a8296" font-size="12">　子进程继承整张 fd 表</tspan></text>
+<line x1="410" y1="138" x2="410" y2="150" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="154" width="728" height="46" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="167.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="181.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="90" y="182.0" font-size="13.5" fill="#1d2740">子进程 open("out.log")<tspan fill="#7a8296" font-size="12">　得到当前最小空闲号 · 比如 fd 3</tspan></text>
+<line x1="410" y1="200" x2="410" y2="212" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="216" width="728" height="60" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="58" y="236.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="68" y="250.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="90" y="244.0" font-size="13.5" font-weight="700" fill="#ffffff">dup2(3, 1)<tspan font-weight="400" fill="#c3c9d6" font-size="12">　把 fd 1 的表项改指到 out.log 的 struct file</tspan></text>
+<text x="90" y="261.0" font-size="11" fill="#e8862e">随后关闭 fd 3 —— 1 号位从此姓 out.log</text>
+<line x1="410" y1="276" x2="410" y2="288" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="292" width="728" height="60" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="312.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="326.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="90" y="320.0" font-size="13.5" font-weight="700" fill="#1d2740">exec("node")<tspan font-weight="400" fill="#7a8296" font-size="12">　新程序装入</tspan></text>
+<text x="90" y="337.0" font-size="11" fill="#7a8296">对 fd 表动过的手脚一无所知</text>
+<line x1="410" y1="352" x2="410" y2="364" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="368" width="728" height="52" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="410.0" y="398.5" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">console.log(...) 照旧写 fd 1 → 字节实际落进 out.log</text>
+<text x="46" y="452" font-size="12.5" fill="#7a8296">重定向不是“修改输出”：程序只认 fd，指向谁由启动者决定</text>
+</svg>

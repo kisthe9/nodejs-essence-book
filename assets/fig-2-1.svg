@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="580" viewBox="0 0 820 580" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="580" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">V8 的三层执行结构</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">V8 RUNTIME STRUCTURE</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="82" width="728" height="468" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="62" y="106" font-size="10.5" fill="#7a8296" letter-spacing="2.5">ISOLATE · 隔离舱</text>
+
+<text x="70" y="140" font-size="14" fill="#16213e" font-weight="800">Isolate · 隔离舱</text>
+<text x="70" y="168" font-size="12" fill="#3d4763">· 一个独立的 V8 实例</text>
+<text x="70" y="192" font-size="12" fill="#3d4763">· 独立的堆内存、独立的垃圾回收器</text>
+<text x="70" y="216" font-size="12" fill="#c56a15" font-weight="700">· 规则：同一时刻只允许一个线程进入</text>
+<rect x="86" y="240" width="648" height="286" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="102" y="264" font-size="10.5" fill="#7a8296" letter-spacing="2.5">CONTEXT · 执行上下文</text>
+
+<text x="110" y="294" font-size="13.5" fill="#16213e" font-weight="800">Context · 执行上下文</text>
+<text x="110" y="322" font-size="12" fill="#3d4763">· 一套独立的全局对象与内建函数</text>
+<text x="110" y="346" font-size="12" fill="#3d4763">· 同一 Isolate 可有多个 Context</text>
+<rect x="126" y="370" width="568" height="132" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="142" y="394" font-size="10.5" fill="#7a8296" letter-spacing="2.5">HANDLE SCOPE · 句柄作用域</text>
+
+<text x="150" y="424" font-size="13" fill="#16213e" font-weight="800">HandleScope · 句柄作用域</text>
+<text x="150" y="452" font-size="12" fill="#3d4763">· C++ 侧引用 JS 对象的登记簿</text>
+<text x="150" y="476" font-size="12" fill="#3d4763">· 告诉 GC 哪些对象还不能回收</text>
+</svg>

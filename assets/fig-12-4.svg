@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="560" viewBox="0 0 820 560" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="560" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">自然死亡：善终的三步</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">GRACEFUL EXIT · BEFOREEXIT LOOP</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="210" y="84" width="220" height="36" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="320.0" y="106.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">事件循环空了</text>
+<line x1="320" y1="122" x2="320" y2="142" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="210" y="146" width="220" height="42" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="320.0" y="171.5" text-anchor="middle" font-size="12" fill="#1d2740">触发 process.on('beforeExit')</text>
+<line x1="320" y1="190" x2="320" y2="268" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="210" y="272" width="220" height="48" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.2"/>
+<text x="320.0" y="300.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">回调安排了新异步任务？</text>
+<text x="250" y="340" font-size="11.5" fill="#7a8296">否</text>
+<line x1="320" y1="322" x2="320" y2="376" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="210" y="380" width="220" height="42" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="320.0" y="405.5" text-anchor="middle" font-size="12" fill="#1d2740">触发 process.on('exit')</text>
+<text x="446" y="400" font-size="11" fill="#7a8296">只能跑同步代码：循环已停摆</text>
+<line x1="320" y1="424" x2="320" y2="452" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="210" y="456" width="220" height="42" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="320.0" y="481.5" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="700">清理队列 · 进程终止</text>
+<text x="446" y="478" font-size="11" fill="#7a8296">第 11 章 Environment 的那条队列</text>
+<path d="M 432 296 H 560 V 167 H 436" fill="none" stroke="#e8862e" stroke-width="2" marker-end="url(#ara)"/>
+<text x="468" y="288" font-size="11.5" fill="#c56a15" font-weight="700">是</text>
+<rect x="560" y="222" width="190" height="40" rx="4" fill="#ffffff" stroke="#e8862e" stroke-width="1.2"/>
+<text x="655.0" y="246.5" text-anchor="middle" font-size="11.5" fill="#1d2740">回到事件循环继续跑</text>
+<text x="576" y="152" font-size="10.5" fill="#7a8296">再次排空 ⇒ 再次触发</text>
+<text x="576" y="169" font-size="10.5" fill="#7a8296">beforeExit 可能触发多次</text>
+<text x="46" y="536" font-size="11.5" fill="#7a8296">旁路：process.exit() 跳过挽留直入 exit —— 缓冲区里的异步写随之丢失（拉闸）</text>
+</svg>

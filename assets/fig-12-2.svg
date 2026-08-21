@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="560" viewBox="0 0 820 560" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="560" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">process 的长成：空壳 · 装配 · 挂全局</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">PROCESS · THREE GROWTH STEPS</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="70" y="84" width="460" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="96.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="110.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="114" y="111.0" font-size="13.5" fill="#1d2740">C++ 立空壳<tspan fill="#7a8296" font-size="12">　近白板 JS 对象 · 登记为 process_object()</tspan></text>
+<text x="70" y="148" font-size="11" fill="#7a8296">src/node.cc 建环境时创建 —— 投影的锚点</text>
+<line x1="300" y1="156" x2="300" y2="172" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="70" y="176" width="460" height="250" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="86" y="200" font-size="10.5" fill="#7a8296" letter-spacing="2.5">② 引导脚本逐件装配 · pre_execution.js</text>
+
+<rect x="90" y="208" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="100" y="222.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="122" y="223" font-size="12.5" fill="#7a8296">并入 C++ 方法</text>
+<text x="122" y="241" font-size="10.5" fill="#7a8296">pid / kill / exit…… 经 internalBinding('process_methods') 投影</text>
+<rect x="90" y="262" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="100" y="276.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="122" y="277" font-size="12.5" fill="#7a8296">切换原型</text>
+<text x="122" y="295" font-size="10.5" fill="#7a8296">换成 EventEmitter.prototype —— process.on('exit') 由此而来</text>
+<rect x="90" y="316" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="100" y="330.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="122" y="331" font-size="12.5" fill="#7a8296">挂数据</text>
+<text x="122" y="349" font-size="10.5" fill="#7a8296">argv 是解析成品；env 是环境表实时代理，读写直达 getenv/setenv</text>
+<rect x="90" y="370" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="100" y="384.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="122" y="385" font-size="12.5" fill="#7a8296">stdio 惰性 getter</text>
+<text x="122" y="403" font-size="10.5" fill="#7a8296">首碰 process.stdout 才按 fd 1 真身定同步/异步写（第 6 章）</text>
+<line x1="300" y1="428" x2="300" y2="446" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="70" y="450" width="460" height="44" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="82" y="462.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="92" y="476.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="114" y="477.0" font-size="13.5" fill="#ffffff">挂全局<tspan fill="#c3c9d6" font-size="12">　globalThis.process 就位 · 用户代码可见</tspan></text>
+<text x="70" y="516" font-size="11.5" fill="#7a8296">身上几乎每样东西都转发给 C++ 侧 Environment —— process 是投影不是本体</text>
+<line x1="560" y1="84" x2="560" y2="520" stroke="#c9cfdd" stroke-width="1"/>
+<text x="584" y="100" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">PROJECTION</text>
+<text x="584" y="124" font-size="14" fill="#16213e" font-weight="800">为什么叫投影</text>
+<line x1="584" y1="136" x2="628" y2="136" stroke="#e8862e" stroke-width="3"/>
+<text x="584" y="164" font-size="12.5" fill="#3d4763">process.env → C++ 环境表</text>
+<text x="584" y="188" font-size="12.5" fill="#3d4763">process.exit → 环境的退出流程</text>
+<text x="584" y="212" font-size="12.5" fill="#3d4763">process.memoryUsage → Binding</text>
+<text x="584" y="236" font-size="11.5" fill="#8b93a7">面貌随启动方式微调</text>
+<text x="584" y="260" font-size="11.5" fill="#8b93a7">主脚本 / REPL / Worker</text>
+<text x="584" y="284" font-size="11.5" fill="#8b93a7">装配清单各不相同</text>
+</svg>

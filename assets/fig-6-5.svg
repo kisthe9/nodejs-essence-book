@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="470" viewBox="0 0 820 470" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="470" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">cluster 共享端口：把 listen-fd 寄给每个 worker</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">SCM_RIGHTS · SHARED LISTEN FD</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="240" y="92" width="340" height="48" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="410.0" y="120.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="410" y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">主进程：创建监听 socket</text>
+<text x="410" y="130" text-anchor="middle" font-size="11" fill="#c3c9d6">得到 listen-fd</text>
+<path d="M 330 140 V 174 H 200 V 196" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 490 140 V 174 H 620 V 196" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="96" y="152" font-size="11" fill="#7a8296">IPC 通道 · SCM_RIGHTS</text>
+<text x="96" y="168" font-size="11" fill="#7a8296">把 listen-fd 寄给 worker 1</text>
+<text x="548" y="168" font-size="11" fill="#7a8296">同样寄给 worker 2 …</text>
+<rect x="90" y="200" width="220" height="44" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="200.0" y="226.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">worker 1 · fd 表得一个 fd</text>
+<rect x="510" y="200" width="220" height="44" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="620.0" y="226.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">worker 2 · fd 表得一个 fd</text>
+<path d="M 200 244 V 272 H 360 V 296" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 620 244 V 272 H 460 V 296" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="290" y="300" width="240" height="52" rx="4" fill="#ffffff" stroke="#e8862e" stroke-width="1.2"/>
+<text x="410.0" y="330.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="410" y="322" text-anchor="middle" font-size="13" font-weight="700" fill="#1d2740">同一个监听 socket 的 inode</text>
+<text x="410" y="342" text-anchor="middle" font-size="11" fill="#7a8296">号码各异 · 背后是同一份资源</text>
+<text x="46" y="396" font-size="12.5" fill="#7a8296">每个 worker 都在自己的 epoll 里监听它</text>
+<text x="46" y="418" font-size="12.5" fill="#7a8296">内核把新连接分给其中一个 —— 没有端口复用魔法，没有转发代理</text>
+<text x="46" y="444" font-size="11.5" fill="#c56a15" font-weight="700">child.send(msg, socket) 的第二个参数，走的就是这条途径</text>
+</svg>

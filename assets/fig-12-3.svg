@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="450" viewBox="0 0 820 450" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="450" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">模块加载：火把交接的位置</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">LOADER HANDOFF · STEP ④</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="70" y="84" width="440" height="76" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="290.0" y="126.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="86" y="108" font-size="12.5" fill="#7a8296">引导期 · 内置加载器</text>
+<text x="86" y="126" font-size="10.5" fill="#7a8296">lib/internal/bootstrap/loaders.js</text>
+<text x="86" y="146" font-size="11" fill="#7a8296">加载引导脚本与 lib/ 全家桶</text>
+<path d="M 290 162 V 196" fill="none" stroke="#e8862e" stroke-width="2" marker-end="url(#ara)"/>
+<text x="306" y="184" font-size="12" fill="#c56a15" font-weight="700">④ 火把交接</text>
+<rect x="70" y="200" width="440" height="76" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="290.0" y="242.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="86" y="224" font-size="12.5" fill="#7a8296">主模块 · CJS 加载器</text>
+<text x="86" y="242" font-size="10.5" fill="#7a8296">lib/internal/modules/cjs/loader.js</text>
+<text x="86" y="262" font-size="11" fill="#7a8296">第一次为你的代码服务</text>
+<line x1="290" y1="278" x2="290" y2="312" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="70" y="316" width="440" height="62" rx="4" fill="#f4f6fa" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="290.0" y="351.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="86" y="340" font-size="12" fill="#7a8296">你的每次 require：同一台 CJS 加载器</text>
+<text x="86" y="360" font-size="11" fill="#7a8296">require 是按本模块位置现场制作的私有副本</text>
+<line x1="540" y1="84" x2="540" y2="420" stroke="#c9cfdd" stroke-width="1"/>
+<text x="564" y="96" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">ONE SHELL · TWO PASSES</text>
+<text x="564" y="120" font-size="14" fill="#16213e" font-weight="800">同一壳 · 两本通行证</text>
+<line x1="564" y1="132" x2="608" y2="132" stroke="#e8862e" stroke-width="3"/>
+<text x="564" y="160" font-size="12.5" fill="#3d4763">内置壳多出两参数：</text>
+<text x="564" y="184" font-size="12.5" fill="#3d4763">internalBinding → 穿门直达 C++</text>
+<text x="564" y="208" font-size="12.5" fill="#3d4763">primordials → 原始副本</text>
+<text x="564" y="232" font-size="12.5" fill="#3d4763">用户壳：__filename / __dirname</text>
+<text x="564" y="256" font-size="11.5" fill="#8b93a7">摸不到门内参数</text>
+<text x="564" y="280" font-size="11.5" fill="#8b93a7">出生证上就没发</text>
+<text x="564" y="340" font-size="12" fill="#c56a15" font-weight="700">权限的差异就是函数签名的差异</text>
+<text x="70" y="412" font-size="11.5" fill="#7a8296">此前加载器只服务门内自己人；主模块是第一个“用户待遇”的模块</text>
+</svg>

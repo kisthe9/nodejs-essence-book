@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="500" viewBox="0 0 820 500" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="500" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">事件循环：uv_run 的一圈</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">EVENT LOOP · ONE TICK</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="76" width="352" height="362" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="62" y="100" font-size="10.5" fill="#7a8296" letter-spacing="2.5">ONE TICK · 一圈</text>
+
+<rect x="66" y="112" width="312" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="78" y="122.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="88" y="136.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="110" y="137.0" font-size="13.5" fill="#1d2740">timers<tspan fill="#7a8296" font-size="12">　到期的定时器</tspan></text>
+<rect x="66" y="162" width="312" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="78" y="172.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="88" y="186.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="110" y="187.0" font-size="13.5" fill="#1d2740">pending<tspan fill="#7a8296" font-size="12">　推迟的系统错误</tspan></text>
+<rect x="66" y="212" width="312" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="78" y="222.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="88" y="236.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="110" y="237.0" font-size="13.5" fill="#1d2740">idle / prepare<tspan fill="#7a8296" font-size="12">　内部插桩</tspan></text>
+<rect x="66" y="262" width="312" height="48" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="78" y="276.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="88" y="290.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="110" y="284.0" font-size="13.5" font-weight="700" fill="#ffffff">poll<tspan font-weight="400" fill="#c3c9d6" font-size="12">　收割就绪事件</tspan></text>
+<text x="110" y="301.0" font-size="11" fill="#e8862e">心脏主腔 · 空闲时阻塞于此</text>
+<rect x="66" y="320" width="312" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="78" y="330.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="88" y="344.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="110" y="345.0" font-size="13.5" fill="#1d2740">check<tspan fill="#7a8296" font-size="12">　setImmediate</tspan></text>
+<rect x="66" y="370" width="312" height="40" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="78" y="380.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="88" y="394.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+<text x="110" y="395.0" font-size="13.5" fill="#1d2740">close<tspan fill="#7a8296" font-size="12">　关闭类回调</tspan></text>
+<line x1="222" y1="152" x2="222" y2="159" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="222" y1="202" x2="222" y2="209" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="222" y1="252" x2="222" y2="259" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="222" y1="310" x2="222" y2="317" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="222" y1="360" x2="222" y2="367" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<path d="M 378 390 H 448 V 132 H 382" fill="none" stroke="#e8862e" stroke-width="2" marker-end="url(#ara)"/>
+<text x="458" y="256" font-size="12" fill="#c56a15" font-weight="700">还有活</text>
+<text x="458" y="273" font-size="12" fill="#c56a15" font-weight="700">转下一圈</text>
+<path d="M 222 410 V 448" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="237" y="434" font-size="11.5" fill="#7a8296">无事可做</text>
+<rect x="137.0" y="452" width="170" height="32" rx="3" fill="#16213e"/>
+<text x="222" y="472.5" text-anchor="middle" font-size="12.5" fill="#ffffff">进程自然退出</text>
+<line x1="512" y1="80" x2="512" y2="438" stroke="#c9cfdd" stroke-width="1"/>
+<text x="536" y="102" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">BETWEEN PHASES</text>
+<text x="536" y="126" font-size="14" fill="#16213e" font-weight="800">阶段之间</text>
+<line x1="536" y1="138" x2="580" y2="138" stroke="#e8862e" stroke-width="3"/>
+<text x="536" y="166" font-size="12.5" fill="#3d4763">排空 nextTick 队列</text>
+<text x="536" y="190" font-size="12.5" fill="#3d4763">排空 Promise 微任务</text>
+<text x="536" y="214" font-size="11.5" fill="#8b93a7">递归微任务会饿死循环</text>
+<text x="536" y="238" font-size="12.5" fill="#3d4763">过闸动作：MakeCallback</text>
+<text x="536" y="296" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">LIVENESS</text>
+<text x="536" y="320" font-size="14" fill="#16213e" font-weight="800">存活判据</text>
+<line x1="536" y1="332" x2="580" y2="332" stroke="#e8862e" stroke-width="3"/>
+<text x="536" y="360" font-size="12.5" fill="#3d4763">每圈结束清点活跃句柄</text>
+<text x="536" y="384" font-size="11.5" fill="#8b93a7">listen() 让进程不死</text>
+</svg>

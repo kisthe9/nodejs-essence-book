@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="420" viewBox="0 0 820 420" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="420" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">插队者：微任务的优先级</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">MICROTASK PRIORITY</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="96" width="450" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="112.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="126.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="90" y="127.0" font-size="13.5" fill="#1d2740">process.nextTick 队列<tspan fill="#7a8296" font-size="12">　Node 自己维护 · 最高优先级</tspan></text>
+<rect x="46" y="164" width="450" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="180.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="194.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="90" y="195.0" font-size="13.5" fill="#1d2740">Promise 微任务队列<tspan fill="#7a8296" font-size="12">　V8 维护</tspan></text>
+<line x1="46" y1="234" x2="496" y2="234" stroke="#c9cfdd" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="271" y="257" text-anchor="middle" font-size="11.5" fill="#3d4763">以上两个队列在事件循环每个阶段切换的间隙被排空</text>
+<text x="271" y="275" text-anchor="middle" font-size="11.5" fill="#7a8296">且 nextTick 队列先于 Promise 队列</text>
+<line x1="46" y1="290" x2="496" y2="290" stroke="#c9cfdd" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="46" y="306" width="450" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="322.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="336.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="90" y="337.0" font-size="13.5" fill="#1d2740">七阶段里的宏任务回调<tspan fill="#7a8296" font-size="12">　timers / poll / check …</tspan></text>
+<path d="M 521 106 V 348" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="521" y="96" text-anchor="middle" font-size="11" fill="#7a8296">高</text>
+<text x="521" y="368" text-anchor="middle" font-size="11" fill="#7a8296">低</text>
+<line x1="546" y1="90" x2="546" y2="392" stroke="#c9cfdd" stroke-width="1"/>
+<text x="570" y="112" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">DRAIN · 排空</text>
+<text x="570" y="136" font-size="14" fill="#16213e" font-weight="800">排空，不是排队</text>
+<line x1="570" y1="148" x2="614" y2="148" stroke="#e8862e" stroke-width="3"/>
+<text x="570" y="176" font-size="12.5" fill="#3d4763">阶段间隙全量清空</text>
+<text x="570" y="200" font-size="12.5" fill="#3d4763">nextTick 先 · Promise 后</text>
+<text x="570" y="224" font-size="12.5" fill="#3d4763">宏任务按阶段依次放行</text>
+<text x="570" y="248" font-size="11.5" fill="#8b93a7">递归微任务会饿死循环</text>
+</svg>

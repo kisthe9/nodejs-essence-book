@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="440" viewBox="0 0 820 440" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="440" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">MakeCallback 的三段动作</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">MAKECALLBACK · RETURN PATH</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="90" y="88" width="150" height="36" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="165.0" y="110.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">libuv 事件</text>
+<line x1="240" y1="106" x2="286" y2="106" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="290" y="88" width="150" height="36" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="365.0" y="110.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">C++ 回调</text>
+<line x1="440" y1="106" x2="486" y2="106" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="490" y="88" width="180" height="36" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="580.0" y="110.5" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="700">MakeCallback</text>
+<path d="M 580 124 V 148 H 410 V 164" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="90" y="168" width="640" height="62" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="102" y="189.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="112" y="203.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">①</text>
+<text x="134" y="197.0" font-size="13.5" font-weight="700" fill="#1d2740">进入 CallbackScope<tspan font-weight="400" fill="#7a8296" font-size="12">　把“当前异步上下文”切换为该回调对应的值</tspan></text>
+<text x="134" y="214.0" font-size="11" fill="#7a8296">——第 15 章的护照查验，就在这一步发生</text>
+<rect x="90" y="252" width="640" height="62" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="102" y="273.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="112" y="287.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">②</text>
+<text x="134" y="281.0" font-size="13.5" font-weight="700" fill="#1d2740">在 TryCatch 兜底中调用 JS 函数<tspan font-weight="400" fill="#7a8296" font-size="12">　异常不会炸穿 C++ 栈</tspan></text>
+<text x="134" y="298.0" font-size="11" fill="#7a8296">异常被兜住，回调返回后转投 process 的 'uncaughtException'（第 9 章快速失败）</text>
+<rect x="90" y="336" width="640" height="62" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="102" y="357.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="112" y="371.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">③</text>
+<text x="134" y="365.0" font-size="13.5" font-weight="700" fill="#1d2740">回调返回后，排空 nextTick / 微任务队列<tspan font-weight="400" fill="#7a8296" font-size="12">　第 4 章的“阶段间隙”</tspan></text>
+<text x="134" y="382.0" font-size="11" fill="#7a8296">——然后才把控制权交还事件循环</text>
+<line x1="410.0" y1="232" x2="410.0" y2="250" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="410.0" y1="316" x2="410.0" y2="334" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+</svg>

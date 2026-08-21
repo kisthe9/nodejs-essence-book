@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="576" viewBox="0 0 820 576" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="576" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">谁在继承 EventEmitter</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">EVERY I/O OBJECT EMITS</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="92" width="200" height="44" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="146.0" y="118.5" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">EventEmitter</text>
+<line x1="146" y1="136" x2="146" y2="504" stroke="#2a3550" stroke-width="1.2"/>
+<line x1="146" y1="194" x2="190" y2="194" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="170" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="198.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="191" font-size="12.5" font-weight="700" fill="#1d2740">Stream 家族</text>
+<text x="206" y="208" font-size="10.5" fill="#7a8296">Readable · Writable · Duplex · Transform</text>
+<text x="510" y="198" font-size="11.5" fill="#3d4763">'data' 'end' 'drain' 'error'</text>
+<line x1="146" y1="256" x2="190" y2="256" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="232" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="260.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="253" font-size="12.5" font-weight="700" fill="#1d2740">net.Server / net.Socket</text>
+<text x="206" y="270" font-size="10.5" fill="#7a8296">服务器与连接对象</text>
+<text x="510" y="260" font-size="11.5" fill="#3d4763">'connection' 'data' 'close'</text>
+<line x1="146" y1="318" x2="190" y2="318" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="294" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="322.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="315" font-size="12.5" font-weight="700" fill="#1d2740">http.Server</text>
+<text x="206" y="332" font-size="10.5" fill="#7a8296">继承 net.Server</text>
+<text x="510" y="322" font-size="11.5" fill="#3d4763">'request' 'upgrade'</text>
+<line x1="146" y1="380" x2="190" y2="380" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="356" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="384.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="377" font-size="12.5" font-weight="700" fill="#1d2740">ChildProcess</text>
+<text x="206" y="394" font-size="10.5" fill="#7a8296">child_process 的产物</text>
+<text x="510" y="384" font-size="11.5" fill="#3d4763">'exit' 'message'</text>
+<line x1="146" y1="442" x2="190" y2="442" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="418" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="446.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="439" font-size="12.5" font-weight="700" fill="#1d2740">Worker</text>
+<text x="206" y="456" font-size="10.5" fill="#7a8296">worker_threads</text>
+<text x="510" y="446" font-size="11.5" fill="#3d4763">'message' 'exit'</text>
+<line x1="146" y1="504" x2="190" y2="504" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="190" y="480" width="300" height="48" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="340.0" y="508.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="206" y="501" font-size="12.5" font-weight="700" fill="#1d2740">process 对象本身</text>
+<text x="206" y="518" font-size="10.5" fill="#7a8296">全局唯一</text>
+<text x="510" y="508" font-size="11.5" fill="#3d4763">'beforeExit' 'SIGINT' 'uncaughtException'</text>
+<text x="46" y="550" font-size="12" fill="#7a8296">I/O 对象的一生 = 多种、多次、不定时的事情 —— EventEmitter 是最小完备接口</text>
+</svg>

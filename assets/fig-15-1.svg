@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="450" viewBox="0 0 820 450" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="450" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">同步世界：调用栈自带上下文</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">CALL STACK AS CONTEXT</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="76" width="520" height="280" rx="4" fill="#f4f6fa" stroke="#2a3550" stroke-width="1.4"/>
+<text x="62" y="100" font-size="10.5" fill="#7a8296" letter-spacing="2.5">SYNC · 一条完整的栈</text>
+
+<rect x="96" y="116" width="240" height="42" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="216.0" y="141.5" text-anchor="middle" font-size="13" fill="#1d2740" font-weight="700">handle(req42)</text>
+<line x1="128" y1="158" x2="128" y2="202" stroke="#2a3550" stroke-width="1.2"/>
+<line x1="128" y1="202" x2="176" y2="202" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="176" y="182" width="240" height="42" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="296.0" y="207.5" text-anchor="middle" font-size="12.5" fill="#1d2740">checkAuth()</text>
+<line x1="208" y1="224" x2="208" y2="268" stroke="#2a3550" stroke-width="1.2"/>
+<line x1="208" y1="268" x2="256" y2="268" stroke="#2a3550" stroke-width="1.2"/>
+<rect x="256" y="248" width="240" height="42" rx="4" fill="#ffffff" stroke="#2a3550" stroke-width="1.2"/>
+<text x="376.0" y="273.5" text-anchor="middle" font-size="12.5" fill="#1d2740">log('ok')</text>
+<path d="M 520 268 V 142" fill="none" stroke="#e8862e" stroke-width="2" marker-end="url(#ara)"/>
+<text x="330" y="310" font-size="12" fill="#c56a15" font-weight="700">沿调用栈向上回溯，就知道</text>
+<text x="330" y="327" font-size="12" fill="#c56a15" font-weight="700">“我在为 req42 工作”</text>
+<line x1="590" y1="84" x2="590" y2="350" stroke="#c9cfdd" stroke-width="1"/>
+<text x="614" y="100" font-size="10.5" fill="#8b93a7" letter-spacing="2.5">WHY IT WORKS</text>
+<text x="614" y="124" font-size="14" fill="#16213e" font-weight="800">栈帧层层相叠</text>
+<line x1="614" y1="136" x2="658" y2="136" stroke="#e8862e" stroke-width="3"/>
+<text x="614" y="164" font-size="12.5" fill="#3d4763">每个函数都记得是谁调的</text>
+<text x="614" y="188" font-size="12.5" fill="#3d4763">任何深度可顺栈回溯</text>
+<text x="614" y="212" font-size="12.5" fill="#3d4763">同步世界无需额外机制</text>
+<text x="614" y="236" font-size="11.5" fill="#8b93a7">但异步会把栈炸掉</text>
+<text x="614" y="260" font-size="11.5" fill="#8b93a7">回调入场时原栈早已退栈</text>
+<rect x="46" y="380" width="728" height="40" rx="4" fill="#f4f6fa" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="410.0" y="404.5" text-anchor="middle" font-size="12" fill="#1d2740" font-weight="700">同步不需要任何额外机制——栈本身就是“来龙去脉”；问题从异步开始</text>
+</svg>

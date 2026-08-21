@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="500" viewBox="0 0 820 500" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="500" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">require 的五步旅程</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">REQUIRE PIPELINE</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="215.0" y="76" width="190" height="32" rx="3" fill="#16213e"/>
+<text x="310" y="96.5" text-anchor="middle" font-size="12.5" fill="#ffffff">require('foo')</text>
+<line x1="310" y1="112" x2="310" y2="130" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="70" y="132" width="480" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="148.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="162.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="114" y="156.0" font-size="13.5" font-weight="700" fill="#1d2740">解析<tspan font-weight="400" fill="#7a8296" font-size="12">　把 'foo' 变成绝对路径</tspan></text>
+<text x="114" y="173.0" font-size="11" fill="#7a8296">核心模块？相对路径？node_modules 逐级向上找？</text>
+<rect x="70" y="202" width="480" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="218.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="232.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="114" y="233.0" font-size="13.5" fill="#1d2740">查缓存<tspan fill="#7a8296" font-size="12">　Module._cache 里有？</tspan></text>
+<rect x="70" y="272" width="480" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="288.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="302.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="114" y="296.0" font-size="13.5" font-weight="700" fill="#1d2740">建模块对象<tspan font-weight="400" fill="#7a8296" font-size="12">　new Module(filename)，塞入缓存</tspan></text>
+<text x="114" y="313.0" font-size="11" fill="#7a8296">注意：先入缓存，再执行</text>
+<rect x="70" y="342" width="480" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="358.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="372.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="114" y="366.0" font-size="13.5" font-weight="700" fill="#1d2740">编译执行<tspan font-weight="400" fill="#7a8296" font-size="12">　把文件内容包进一层函数再执行</tspan></text>
+<text x="114" y="383.0" font-size="11" fill="#7a8296">(function(exports, require, module, __filename, __dirname) { …你的代码… })</text>
+<rect x="70" y="412" width="480" height="52" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="82" y="428.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="92" y="442.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="114" y="443.0" font-size="13.5" fill="#1d2740">返回<tspan fill="#7a8296" font-size="12">　module.exports</tspan></text>
+<line x1="310.0" y1="186" x2="310.0" y2="200" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="310.0" y1="256" x2="310.0" y2="270" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="310.0" y1="326" x2="310.0" y2="340" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="310.0" y1="396" x2="310.0" y2="410" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="554" y1="228.0" x2="596" y2="228.0" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="600" y="204" width="172" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="686.0" y="225.0" text-anchor="middle" font-size="12" font-weight="700" fill="#1d2740">有：直接返回缓存的 exports</text>
+<text x="686.0" y="242.0" text-anchor="middle" font-size="10.5" fill="#7a8296">（到此结束）</text>
+<text x="562" y="220.0" font-size="10.5" fill="#7a8296">有</text>
+</svg>

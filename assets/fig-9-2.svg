@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="450" viewBox="0 0 820 450" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="450" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">'error'：唯一的特殊事件</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">ERROR RULE · FAIL FAST</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="290" y="96" width="240" height="48" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.2"/>
+<text x="410.0" y="124.5" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">emit('error', err)</text>
+<line x1="350" y1="144" x2="210" y2="190" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="470" y1="144" x2="610" y2="190" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="80" y="194" width="260" height="56" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="210.0" y="226.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="96" y="218" font-size="13" font-weight="700" fill="#1d2740">有监听器</text>
+<text x="96" y="238" font-size="11.5" fill="#7a8296">正常同步分发 · 跟别的事件一样</text>
+<rect x="480" y="194" width="260" height="56" rx="4" fill="#ffffff" stroke="#e8862e" stroke-width="1.2"/>
+<text x="610.0" y="226.5" text-anchor="middle" font-size="12" fill="#1d2740"></text>
+<text x="496" y="218" font-size="13" font-weight="700" fill="#c56a15">没监听器</text>
+<text x="496" y="238" font-size="11.5" fill="#3d4763">直接 throw err</text>
+<line x1="610" y1="250" x2="610" y2="284" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="480" y="288" width="260" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="610.0" y="314.5" text-anchor="middle" font-size="12" fill="#1d2740">没有 try/catch 接住</text>
+<line x1="610" y1="332" x2="610" y2="366" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="480" y="370" width="260" height="48" rx="4" fill="#e8862e" stroke="#e8862e" stroke-width="1.2"/>
+<text x="610.0" y="398.5" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">进程崩溃退出</text>
+<text x="80" y="300" font-size="12.5" fill="#7a8296">快速失败设计：</text>
+<text x="80" y="324" font-size="12" fill="#7a8296">要么显式处理，要么进程死给你看</text>
+<text x="80" y="372" font-size="12" fill="#c56a15" font-weight="700">铁律：长期存活的 emitter 必挂 'error' 监听</text>
+<text x="80" y="396" font-size="11.5" fill="#7a8296">uncaughtException 是最后底线，不是免死金牌</text>
+</svg>

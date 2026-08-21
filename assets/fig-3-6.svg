@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="420" viewBox="0 0 820 420" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="420" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">一个回调的一生 · 四站</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">A CALLBACK'S LIFE</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="140" width="164" height="186" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="60" y="156" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="70" y="170.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="88" y="171" font-size="12.5" font-weight="700" fill="#1d2740">封装（本章）</text>
+<text x="60" y="210" font-size="11" font-weight="700" fill="#c56a15">穿越语言边界</text>
+<line x1="60" y1="222" x2="104" y2="222" stroke="#e8862e" stroke-width="2"/>
+<text x="60" y="252" font-size="11.5" fill="#3d4763">JS 函数被封存为</text>
+<text x="60" y="274" font-size="11.5" fill="#3d4763">C++ 可持有的实体</text>
+<rect x="234" y="140" width="164" height="186" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="248" y="156" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="258" y="170.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="276" y="171" font-size="12.5" font-weight="700" fill="#1d2740">调度（第 4 章）</text>
+<text x="248" y="210" font-size="11" font-weight="700" fill="#c56a15">穿越时间边界</text>
+<line x1="248" y1="222" x2="292" y2="222" stroke="#e8862e" stroke-width="2"/>
+<text x="248" y="252" font-size="11.5" fill="#3d4763">七个瓣膜决定</text>
+<text x="248" y="274" font-size="11.5" fill="#3d4763">它何时出闸</text>
+<rect x="422" y="140" width="164" height="186" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="436" y="156" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="446" y="170.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="464" y="171" font-size="12.5" font-weight="700" fill="#1d2740">喂数（第 6 章）</text>
+<text x="436" y="210" font-size="11" font-weight="700" fill="#c56a15">穿越进程边界</text>
+<line x1="436" y1="222" x2="480" y2="222" stroke="#e8862e" stroke-width="2"/>
+<text x="436" y="252" font-size="11.5" fill="#3d4763">它的数据可能来自</text>
+<text x="436" y="274" font-size="11.5" fill="#3d4763">另一个进程的管道</text>
+<rect x="610" y="140" width="164" height="186" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="624" y="156" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="634" y="170.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="652" y="171" font-size="12.5" font-weight="700" fill="#1d2740">认出（第 15 章）</text>
+<text x="624" y="210" font-size="11" font-weight="700" fill="#c56a15">穿越因果边界</text>
+<line x1="624" y1="222" x2="668" y2="222" stroke="#e8862e" stroke-width="2"/>
+<text x="624" y="252" font-size="11.5" fill="#3d4763">每次进场验护照，</text>
+<text x="624" y="274" font-size="11.5" fill="#3d4763">知道在为谁工作</text>
+<line x1="212" y1="233" x2="230" y2="233" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="400" y1="233" x2="418" y2="233" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<line x1="588" y1="233" x2="606" y2="233" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+</svg>

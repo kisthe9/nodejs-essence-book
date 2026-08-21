@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="460" viewBox="0 0 820 460" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="460" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">BaseObject 继承链 · 统一各种资源</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">INHERITANCE CHAIN</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="90" y="110" width="220" height="48" rx="4" fill="#16213e" stroke="#2a3550" stroke-width="1.2"/>
+<text x="200.0" y="138.5" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">BaseObject</text>
+<text x="336" y="138.5" font-size="12" fill="#3d4763">—— JS/C++ 对象绑定的地基</text>
+<rect x="150" y="196" width="220" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="260.0" y="224.5" text-anchor="middle" font-size="13" fill="#1d2740" font-weight="700">AsyncWrap</text>
+<text x="396" y="224.5" font-size="12" fill="#3d4763">—— 加上异步追踪身份证（asyncId，第 9 章再见）</text>
+<rect x="210" y="282" width="220" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="320.0" y="310.5" text-anchor="middle" font-size="13" fill="#1d2740" font-weight="700">HandleWrap</text>
+<text x="456" y="310.5" font-size="12" fill="#3d4763">—— 加上 libuv 句柄的生命周期管理</text>
+<rect x="270" y="368" width="220" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<text x="380.0" y="396.5" text-anchor="middle" font-size="13" fill="#1d2740" font-weight="700">各种资源包装</text>
+<text x="516" y="396.5" font-size="12" fill="#3d4763">—— TCPWrap / PipeWrap / TTYWrap / ...</text>
+<path d="M 130 158 V 177.0 H 190 V 192" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 190 244 V 263.0 H 250 V 278" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 250 330 V 349.0 H 310 V 364" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+</svg>

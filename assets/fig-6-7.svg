@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="470" viewBox="0 0 820 470" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="470" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">EMFILE：号码牌用完的雪崩</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">FD EXHAUSTION · CASCADE</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="92" width="728" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="106.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="120.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="90" y="121.0" font-size="13.5" fill="#1d2740">忘记 close（文件）/ 连接未正确关闭<tspan fill="#7a8296" font-size="12">　CLOSE-WAIT 堆积 —— 泄漏持续积累</tspan></text>
+<line x1="410" y1="140" x2="410" y2="154" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="158" width="728" height="48" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="172.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="186.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="90" y="187.0" font-size="13.5" fill="#1d2740">fd 表渐满 → 达到上限<tspan fill="#7a8296" font-size="12">　ulimit -n · 常见默认 1024</tspan></text>
+<line x1="410" y1="206" x2="410" y2="220" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="224" width="728" height="48" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="58" y="238.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="68" y="252.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="90" y="253.0" font-size="13.5" fill="#ffffff">accept() 失败：EMFILE<tspan fill="#c3c9d6" font-size="12">　too many open files</tspan></text>
+<line x1="410" y1="272" x2="410" y2="286" stroke="#2a3550" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="290" width="728" height="60" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="58" y="310.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="68" y="324.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="90" y="325.0" font-size="13.5" fill="#ffffff">新连接全部被拒<tspan fill="#c3c9d6" font-size="12">　打开任何文件也失败 —— 连日志都写不了</tspan></text>
+<text x="46" y="392" font-size="12.5" fill="#7a8296">排查三板斧</text>
+<text x="46" y="416" font-size="12" fill="#7a8296">lsof -p PID 看打开了什么 · ss -s 看 socket 状态分布 · CLOSE-WAIT 堆积 ≈ 对端关了我方忘了 close</text>
+<text x="46" y="442" font-size="11.5" fill="#c56a15" font-weight="700">泄漏的资源类型，直接写在 lsof 的 TYPE 列上</text>
+</svg>

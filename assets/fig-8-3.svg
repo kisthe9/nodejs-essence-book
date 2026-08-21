@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="550" viewBox="0 0 820 550" font-family="'Source Han Sans SC','Noto Sans CJK SC',sans-serif">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#2a3550" stroke-width="1.5"/></marker>
+<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7" fill="none" stroke="#e8862e" stroke-width="1.5"/></marker>
+</defs>
+<rect x="0" y="0" width="820" height="550" fill="#ffffff"/>
+<text x="46" y="40" font-size="18" fill="#16213e" font-weight="800" letter-spacing="1">刹车一路踩到底层</text>
+<text x="774" y="40" text-anchor="end" font-size="10.5" fill="#8b93a7" letter-spacing="3">PAUSE → EPOLL → TCP WINDOW</text>
+<line x1="46" y1="54" x2="774" y2="54" stroke="#16213e" stroke-width="2"/>
+<line x1="46" y1="58.5" x2="774" y2="58.5" stroke="#c9cfdd" stroke-width="0.8"/>
+
+<rect x="46" y="96" width="728" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="58" y="108.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="68" y="122.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="90" y="123.0" font-size="13.5" fill="#1d2740">JS · pause()<tspan fill="#7a8296" font-size="12">　上游停止读取</tspan></text>
+<rect x="62" y="160" width="712" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="74" y="172.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="84" y="186.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="106" y="187.0" font-size="13.5" fill="#1d2740">C++ · uv_read_stop<tspan fill="#7a8296" font-size="12">　停止 libuv 的读取</tspan></text>
+<rect x="78" y="224" width="696" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="90" y="236.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="100" y="250.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="122" y="251.0" font-size="13.5" fill="#1d2740">libuv · 把 fd 从 epoll 关注列表移除<tspan fill="#7a8296" font-size="12">　不再收“可读”通知</tspan></text>
+<rect x="94" y="288" width="680" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="106" y="300.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="116" y="314.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="138" y="315.0" font-size="13.5" fill="#1d2740">内核 · socket 接收缓冲区渐满<tspan fill="#7a8296" font-size="12">　无人来取</tspan></text>
+<rect x="110" y="352" width="664" height="44" rx="4" fill="#ffffff" stroke="#c9cfdd" stroke-width="1.2"/>
+<rect x="122" y="364.0" width="20" height="20" rx="3" fill="#2a3550"/>
+<text x="132" y="378.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="154" y="379.0" font-size="13.5" fill="#1d2740">TCP · 通告窗口缩小<tspan fill="#7a8296" font-size="12">　发送端减速 / 停发</tspan></text>
+<rect x="126" y="416" width="648" height="44" rx="4" fill="#16213e" stroke="#16213e" stroke-width="1.4"/>
+<rect x="138" y="428.0" width="20" height="20" rx="3" fill="#e8862e"/>
+<text x="148" y="442.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+<text x="170" y="443.0" font-size="13.5" fill="#ffffff">对端机器 · 感知到压力<tspan fill="#c3c9d6" font-size="12">　它的写也开始返回 false…</tspan></text>
+<path d="M 410.0 140 V 150 H 418.0 V 158" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 418.0 204 V 214 H 426.0 V 222" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 426.0 268 V 278 H 434.0 V 286" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 434.0 332 V 342 H 442.0 V 350" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M 442.0 396 V 406 H 450.0 V 414" fill="none" stroke="#2a3550" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="46" y="500" font-size="12.5" fill="#c56a15" font-weight="700">背压穿透 JS · C++ · 内核，一路传到网线对面的发送端</text>
+<text x="46" y="524" font-size="12" fill="#7a8296">整条流水线以最慢一环的速度运转 —— 不是靠更大的缓冲</text>
+</svg>
