@@ -4,6 +4,9 @@
 # 插图预览截图（由 SVG 生成的临时校样，不入库）
 assets/*.png
 
+# Python 字节码缓存（figlib 运行时产物）
+__pycache__/
+
 # 系统/编辑器噪音
 .DS_Store
 *.log
