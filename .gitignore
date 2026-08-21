@@ -1,0 +1,10 @@
+# 工具本地配置
+.qoder/
+
+# 插图预览截图（由 SVG 生成的临时校样，不入库）
+assets/*.png
+
+# 系统/编辑器噪音
+.DS_Store
+*.log
+node_modules/
