@@ -6,30 +6,7 @@
 
 从 main 函数到用户代码，是一条固定的装配线：
 
-```
-node app.js
-   │
-   ▼
-① 进程级初始化（每进程一次）
-   解析命令行参数 / 初始化 V8 平台与 libuv
-   │
-   ▼
-② 创建容器（第 11 章的三层，从外向内）
-   创建 Isolate → 创建 Environment → 创建 Realm 与 Context
-   │
-   ▼
-③ 执行内部引导脚本（按严格顺序）
-   a. 加固内建（primordials）
-   b. 搭 Binding 通道（第 3 章的门在此就位）
-   c. 创建 process 对象，挂全局      ← process 诞生于此
-   d. 按启动方式补充配置（主脚本？REPL？Worker？）
-   │
-   ▼
-④ 加载运行用户主模块（你的 app.js，经第 3 章的 CJS/ESM 加载器）
-   │
-   ▼
-⑤ 进入事件循环（第 4 章的心脏开始跳动）
-```
+![图 12-1 启动装配线](../assets/fig-12-1.svg)
 
 装配线上，这几站值得放大看。
 
@@ -48,24 +25,7 @@ Array.prototype.push = function () { /* 被劫持 */ };
 
 ③c 这一小步拆开，是三步生长：
 
-```
-① C++ 立空壳（src/node.cc 建环境时）
-   一个几乎是白板的 JS 对象被造出来，
-   登记为环境的 process_object()——投影的锚点
-        │
-② 引导脚本逐件装配（lib/internal/process/pre_execution.js 等）
-   ├─ 并入 C++ 方法：pid / kill / umask / chdir / exit……
-   │   全部经 internalBinding('process_methods') 投影上来
-   ├─ 切换原型：process 的原型被换成 EventEmitter.prototype
-   │   ——process.on('exit') 的能力从这里来
-   ├─ 挂数据：argv 是命令行解析好的成品；
-   │   env 不是启动时的一份拷贝，而是进程环境表的实时代理
-   │   （读写直达 getenv/setenv，src/node_env_var.cc）
-   └─ stdio 做成惰性 getter：第一次碰 process.stdout，
-      才按 fd 1 的真身（TTY？管道？文件？见第 6 章）决定同步写还是异步写
-        │
-③ 挂全局：globalThis.process 就位，用户代码可见
-```
+![图 12-2 process 三步长成](../assets/fig-12-2.svg)
 
 第 11 章的结论在此落地：**process 是 Environment 的 JS 投影**。它身上几乎每样东西最终都转发给 C++ 侧的环境对象——所以 process.exit() 等于拉整个环境的电闸（12.3 节）。也所以 process 的面貌随启动方式（主脚本/REPL/Worker，装配线 ③d）而微调：装配清单不同。
 
@@ -73,20 +33,7 @@ Array.prototype.push = function () { /* 被劫持 */ };
 
 装配线第 ④ 步是全书最容易被低估的一次交接。**主模块是第一个被"用户待遇"加载的模块**——在它之前，加载器服务的一直是门内自己人：
 
-```
-引导期：内置加载器（lib/internal/bootstrap/loaders.js）
-        加载引导脚本与 lib/ 全家桶
-        ——包壳参数里带 internalBinding 与 primordials
-   │
-   ▼  ← ④：火把交接
-主模块：CJS 加载器（lib/internal/modules/cjs/loader.js）
-        第一次为你的代码服务
-        ——包壳参数是 exports/require/module/__filename/__dirname
-   │
-   ▼
-你的代码里每一次 require：同一台 CJS 加载器，
-但 require 是按"本模块位置"现场制作的私有副本
-```
+![图 12-3 模块加载火把交接](../assets/fig-12-3.svg)
 
 加载的五步流水线（解析 → 缓存 → 建模块 → 包壳执行 → 登记返回）第 3 章已经走过，这里只补两个在启动视角下才看得清的事实。
 
@@ -131,19 +78,7 @@ Array.prototype.push = function () { /* 被劫持 */ };
 
 在彻底断气前，有一个反悔的机会：
 
-```
-事件循环空了
-   │
-   ▼
-触发 process.on('beforeExit')  ←──┐
-   │                              │
-   ├── 回调里安排了新的异步任务？──是──> 回到事件循环继续跑 ──空了──┘
-   │ 否                          （这就是 beforeExit 可能触发多次的原因）
-   ▼
-触发 process.on('exit')   ← 只能跑同步代码：循环已经不会再转了
-   ▼
-执行清理队列（第 11 章 Environment 的那个），进程终止
-```
+![图 12-4 自然退场流程](../assets/fig-12-4.svg)
 
 `beforeExit`："循环空了，还有活吗？"——可以挽留进程。`exit`：遗言时刻——**此时安排任何异步操作都不会执行**，只能做同步收尾。
 
@@ -185,7 +120,103 @@ process.on('SIGTERM', () => {
 
 K8s 的标准剧本是"SIGTERM → 等宽限期（默认 30s）→ SIGKILL"。所以生产服务的必修课：**监听 SIGTERM 执行 12.3 节的优雅退出，并确保能在宽限期内完成**——否则等来的是不讲道理的 SIGKILL，效果等同于 process.exit 的丢数据。
 
-## 12.5 本质小结
+## 12.5 实验：退出顺序的实证
+
+12.3 画了退出的流程图，图不算证据。把三个结论全部量一遍：beforeExit 可多次触发、exit 钩子只许同步、process.exit 与自然退出是两条路。
+
+实验一，挽留与遗言：
+
+```js
+process.on('beforeExit', () => {
+  console.log('beforeExit, loop empty at', Date.now() % 100000);
+  if (!global.__rearmed) {
+    global.__rearmed = true;
+    setTimeout(() => console.log('rescheduled work'), 5);   // 挽留一次
+  }
+});
+process.on('exit', (code) => {
+  console.log('exit hook, code =', code);
+  setTimeout(() => console.log('这行永远不会打印'), 0);       // 异步无效
+});
+```
+
+实测输出（Node v24.12.0）：
+
+```
+beforeExit, loop empty at 20241
+rescheduled work
+beforeExit, loop empty at 20248
+exit hook, code = 0
+```
+
+beforeExit 触发了两次：第一次回调里塞进的 setTimeout 把进程拉回循环，跑完之后循环再次排空，beforeExit 再次触发。exit 钩子只触发一次、code 为 0；它内部那个 setTimeout 永远没有打印——事件循环已经停摆，异步任务无人认领。这就是"遗言只许同步"的实证版。
+
+实验二，process.exit 与自然退出的差异。同一份钩子，两种死法：
+
+```js
+process.on('beforeExit', () => console.log('beforeExit 触发'));
+process.on('exit', (code) => console.log('exit 钩子, code =', code));
+console.log('主代码结束');
+if (process.argv[2] === '--force') process.exit(42);
+```
+
+```
+$ node exit.js                 # 自然退出
+主代码结束
+beforeExit 触发
+exit 钩子, code = 0            （shell 里 $? = 0）
+
+$ node exit.js --force         # process.exit(42)
+主代码结束
+exit 钩子, code = 42           （shell 里 $? = 42）
+```
+
+两份输出的差别只有一处：**process.exit 这条路上，beforeExit 根本没有触发**。自然退出走完整的"循环排空 → beforeExit → exit"流水线，给了你挽留的机会；process.exit 直接拉闸，跳过挽留、直入遗言，退出码取你传的值。这就是 12.3 里"拉闸死"与"善终死"的实证分界——也再次解释了为什么优雅退出永远不该以 process.exit 开场。
+
+## 12.6 反方案对比：为什么 exit 只许同步
+
+把反方案推演一遍：假如 'exit' 钩子里允许安排异步工作——刷一块日志缓冲、发一通报备、写一次磁盘——听起来合情合理：临终之前把事办完。但 Node.js 不允许，浏览器也不允许，为什么？
+
+因为 exit 时刻有两件事已经不可逆。其一，事件循环已经停摆——异步任务赖以执行的机制本身不存在了。异步任务能跑，前提是循环还有转下去的理由；而 exit 的定义就是所有理由都已撤销。其二，内核与父进程在等——shell、systemd、K8s 的 kubelet 都阻塞在 waitpid 上，等收你的退出状态；你在里面"再办点事"，外面就得陪你在门口等。一个允许异步的 exit，意味着死亡时间无人能承诺，退出码变成一张可能永远无法兑现的支票。
+
+浏览器是同款问题，而且演进得更早。beforeunload 从历史上就只许同步：要不要弹"确认离开"的对话框，必须当场同步决定，不能"等一个异步结果回来再说"；在那里安排的异步工作，没有任何机制保证它在页面消失前执行。平台吃够苦头后补上了 pagehide 与 visibilitychange——把可靠的清理挪到"页面还活着"的更早时机，而不是赌死亡那一刻。这个演进与 Node 的分工完全同构：Node 的 beforeExit 就是那个"更早时机"——循环还在转，异步允许，挽留允许；exit 则是最后的同步时刻，只许当场能说完的遗言。
+
+收敛回本书的因果链：**"死亡"必须是同步且有限的，因为它的定义就是"没有理由再活"**——一旦允许在死亡时刻安排异步，等于当场复活一个活下去的理由，死亡从此可以推迟，而可以推迟的退出就可能永远不退。所以 Node 把两刀切得干净：要办异步的事，去 beforeExit 办；exit 时刻，只许同步。下一节的生产剧本，靠的正是这份分工。
+
+## 12.7 生产案例：一次优雅退出演练
+
+某 API 服务跑在 K8s 上，优雅退出这件事他们走了两步弯路，又走回正道。
+
+版本 A：没有任何 SIGTERM 处理。每次发版，网关日志都会多出一片 502 与连接复位。排查：K8s 停 Pod 时发 SIGTERM，Node 不监听就走默认行为——立即终止（12.4），在途请求被拦腰斩断，keep-alive 连接被直接复位。"不处理"等于最粗暴的一次拉闸。
+
+版本 B：工程师补了处理，却掉进另一个坑：
+
+```js
+process.on('SIGTERM', () => {
+  server.close();          // 停止接新连接，等存量完成
+});
+```
+
+发版后出现新症状：Pod 停得特别慢——每次都卡满 terminationGracePeriodSeconds 的 30 秒，最后被 SIGKILL 收走。按本章的标尺排查。第一步，看事件：kubelet 记录"宽限期耗尽，发送 SIGKILL"。第二步，问进程为什么不自杀——用 12.2 的判据，进程活着 = 还有让它活着的理由。`server.close()` 只是不接新连接，存量还在：几个 keep-alive 长客户端迟迟不断开，一个没清的 `setInterval` 心跳，一个没释放的数据库连接池——个个都是活着的理由。事件循环永远排不空，beforeExit 永远不触发，进程只能等 SIGKILL。第三步，看后果：SIGKILL 不给任何钩子，缓冲日志丢失、在途写入被断，每个 Pod 还白白耗掉 30 秒发版时间。
+
+正确的关停剧本，把 12.3 与 12.4 合起来，四个节拍：
+
+```js
+process.on('SIGTERM', () => {
+  server.close(() => {                        // ① 停接新连接，存量跑完后回调
+    clearInterval(heartbeat);                 // ② 清定时器
+    db.end();                                 // ③ 释放连接池——活着的理由逐个撤掉
+  });
+  server.closeIdleConnections?.();            // 踢掉空闲 keep-alive，加速 drain
+  setTimeout(() => process.exit(1), 25_000).unref(); // ④ 兜底：宽限期内自己拉闸
+});
+```
+
+第一步，停接新连接；顺手踢掉空闲 keep-alive，让 drain 不白等。第二步，等在途请求跑完，但必须设截止——截止时间要小于 K8s 的宽限期。第三步，逐个关闭句柄：定时器、连接池、文件句柄，把"活着的理由"全部撤掉，让进程走自然死亡（12.3 的正道）。第四步，兜底：万一 drain 不完，宁可自己 process.exit(1)——退出码 1 留下"超时"的含义，exit 钩子的同步遗言还能执行，好过 SIGKILL 什么都不剩。
+
+修复后的两个数字：发版期单次停 Pod 从 30 秒降到约 3 秒，发版窗口内的 502 归零。回头看：**优雅退出不是技巧，是本章两条判据的直接应用——撤掉所有活着的理由，让进程自然死亡（12.3）；并且一切收尾必须在操作系统的死亡协议宽限期内完成（12.4）。** K8s 不是敌人，它只是一个按截止时间收卷的监考。
+
+## 12.8 本质小结
 
 > **一句话本质**：启动是一条"容器装配 → 引导脚本 → 用户代码 → 事件循环"的流水线（用快照抄了近道）；退出的正道不是杀循环，而是撤掉所有让循环活着的理由。
 

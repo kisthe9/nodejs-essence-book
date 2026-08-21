@@ -4,6 +4,8 @@
 
 | 术语 | 一句话定义 | 出处 |
 |------|-----------|------|
+| C10K | Dan Kegel 于世纪之交提出的挑战：单机一万并发连接；线程模型的天花板、Node.js 的起点 | 第 1 章 |
+| 三条公理 | Dahl 焊成的纪律：非阻塞 I/O 为默认、应用层单线程、载体语言只许回调 | 第 1 章 |
 | Isolate | V8 的独立实例：独立堆、独立 GC，同一时刻只允许一个线程进入 | 第 2 章 |
 | Context | Isolate 内的一套全局环境；vm 沙箱的基础 | 第 2 章 |
 | Ignition / Sparkplug / Maglev / TurboFan | V8 分层编译管线：解释器 / 直译基线 / 中层优化 / 顶层优化编译器 | 第 2 章 |
@@ -32,13 +34,20 @@
 | 背压 | write 返回 false + 'drain' 组成的反向刹车信号，可传导至 TCP 窗口 | 第 8 章 |
 | pipeline | 带错误传播与全链销毁的流组装函数，生产首选 | 第 8 章 |
 | emit | 同步 for 循环分发监听器；异步性来自"何时被调用" | 第 9 章 |
-| AsyncLocalStorage | 跨异步边界携带请求上下文的标准机制 | 第 8、12 章 |
+| llhttp | 住在 C 里的 HTTP 协议状态机；同步跑在 JS 线程上，解析成本记在循环账上 | 第 10 章 |
+| keep-alive | HTTP/1.1 默认复用连接；本质是 fd 经济学，由三个超时守卫 | 第 10 章 |
+| Agent | 客户端 socket 空闲池管理者；Node 19 起 globalAgent 默认 keepAlive | 第 10 章 |
+| AsyncLocalStorage | 跨异步边界携带请求上下文的标准机制 | 第 9、15 章 |
 | Environment | "一个 Node.js 实例"的 C++ 真身：事件循环 + 子系统 + 清理队列 | 第 11 章 |
 | Realm | Context + process + 模块缓存的打包；主 Realm 住着你的代码 | 第 11 章 |
 | primordials | 启动时保存的内建对象纯净副本，防原型污染 | 第 12 章 |
 | 快照（snapshot） | 构建期预执行引导脚本后序列化的 V8 堆，启动时直接恢复 | 第 12 章 |
-| 包壳（wrapper） | 模块源码外的函数壳：用户模块五参；内置模块多 internalBinding 与 primordials 两参 | 第 2、10 章 |
+| 包壳（wrapper） | 模块源码外的函数壳：用户模块五参；内置模块多 internalBinding 与 primordials 两参 | 第 3、12 章 |
 | beforeExit / exit | 循环空后的挽留机会（可多次）/ 只许同步代码的遗言时刻 | 第 12 章 |
+| rss / heapTotal / heapUsed | 进程驻留总和 / V8 已申请 / V8 活对象；内存账本的三层包含 | 第 13 章 |
+| external / arrayBuffers | Buffer BackingStore 等堆外账本；在 rss 内、V8 堆外 | 第 13 章 |
+| monitorEventLoopDelay | 循环的血压计：量回调应跑与实际跑的间隔，看 p99 | 第 13 章 |
+| retainer 链 | 堆快照里"谁拿着它"的引用链；泄漏诊断的终点 | 第 13 章 |
 | 结构化克隆 | postMessage 跨 Isolate 传值的序列化复制机制 | 第 14 章 |
 | Transferable / SharedArrayBuffer | 内存过户（零拷贝）/ 唯一真共享内存（需 Atomics） | 第 14 章 |
 | asyncId / triggerAsyncId | 异步资源的"我是谁"/"谁创建了我"，织成异步因果族谱 | 第 15 章 |

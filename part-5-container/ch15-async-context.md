@@ -6,11 +6,7 @@
 
 先看清问题为什么难。同步世界里不需要任何额外机制：
 
-```
-handle(req42)
-  └── checkAuth()          ← 沿调用栈向上回溯，就知道"我在为 req42 工作"
-        └── log('ok')
-```
+![图 15-1 同步调用栈](../assets/fig-15-1.svg)
 
 调用栈本身就是上下文——栈帧一层层叠着，函数在任何深度都能顺着栈找到"最初是谁调的我"。
 
@@ -31,14 +27,7 @@ triggerAsyncId = 谁创建了我（创建我时，正在执行谁的回调）
 
 于是整个进程里的异步操作构成一棵树：
 
-```
-HTTP 请求到达，执行请求回调        asyncId = 10
-  ├── 回调里 setTimeout(...)       asyncId = 11，trigger = 10
-  ├── 回调里 fs.readFile(...)      asyncId = 12，trigger = 10
-  │     └── readFile 的回调里再 setImmediate(...)
-  │                                asyncId = 13，trigger = 12
-  └── ...
-```
+![图 15-2 asyncId 族谱树](../assets/fig-15-2.svg)
 
 顺着 trigger 一路往上找，任何回调都能回答"我的祖先是谁"——第 9 章说的"异步族谱"，字面意思就是这张图。
 
@@ -236,7 +225,91 @@ run 与 getStore 总是绑定到"某一个 ALS 实例"——这个看似平凡�
 
 需要人为干预的位置只有两类：**边界处**（消息里塞进 store、对侧重新 run）和**入口/出口处**（协议头读写）。中间的一切传播——跨回调、跨 await、跨 emit——运行时已经替你做完。排障时 grep 一个 traceId 就能还原一次请求的完整一生；APM 与分布式追踪（OpenTelemetry 的 Node SDK）内部正是这样：在入口处 run，在边界处携带，在日志与埋点处 getStore。
 
-## 15.9 本质小结
+## 15.9 实验：一次上下文的往返
+
+把一个 store 依次送过本章的全部异步边界，再让它撞一次容器墙。一个脚本：
+
+```js
+const als = new AsyncLocalStorage();
+const bus = new EventEmitter();
+bus.on('ping', () => console.log('emit callback :', als.getStore()?.reqId));
+
+als.run({ reqId: 42 }, async () => {
+  console.log('sync in run   :', als.getStore().reqId);
+  await new Promise((r) => setTimeout(r, 10));   // await
+  console.log('after await   :', als.getStore()?.reqId);
+  setTimeout(() => {                              // 定时器回调
+    console.log('timer callback:', als.getStore()?.reqId);
+    bus.emit('ping');                             // emit 监听器
+    worker.postMessage('go');                     // Worker 边界
+  }, 10);
+});
+console.log('outside run   :', als.getStore());
+```
+
+实测输出（Node v24.12.0）：
+
+```
+sync in run   : 42
+outside run   : undefined
+after await   : 42
+timer callback: 42
+emit callback : 42
+worker getStore() = undefined
+```
+
+逐行读。sync、await、timer、emit——四类异步现场，store 全程是 42：这是 15.4 "帧随延续体传播"的实证，也是第 9 章那个"我在为谁工作"问题的运行答案。outside run 打印 undefined：run 的域边界与函数作用域一样硬，出子树即失效。最后一行是墙：Worker 里 getStore() 拿到 undefined——族谱活在这个 Environment 里，墙对面那套四件套从零开始。
+
+想过墙，就按 15.6 的规矩：显式携带，对岸重新 run。同一个脚本，两边各加一步：
+
+```js
+// 主线程：store 随消息带走
+worker.postMessage({ __ctx: als.getStore(), ...task });
+// Worker：验证断裂，然后重新生根
+parentPort.on('message', ({ __ctx, ...task }) => {
+  console.log('before run:', als.getStore());   // undefined
+  als.run(__ctx, () => work(task));             // 此后全程 42
+});
+```
+
+```
+worker getStore before run = undefined
+main got: worker store reqId = 42
+```
+
+先 undefined，后 42：墙是真的，桥也是真的。顺手把 15.3.1 也验证了——自建的任务分发器若用 AsyncResource 补证，回调里 store 依然在场：
+
+```
+store in task callback = { reqId: 42 }
+```
+
+三组输出合起来就是一句话：**同一个 Environment 内，上下文自动随行于一切异步边界；跨容器边界，只能显式携带。** 15.6 那张传播半径表的每一行，都能这样量出来。
+
+## 15.10 反方案对比：假如用 ThreadLocal
+
+"如何知道我在为谁工作"这个问题不是 Node 首创——线程世界二十年前就遇到了，Java 的标准答案是 ThreadLocal：每条线程一份副本，线程内随取随用，天然隔离。Node 为什么不直接拿来？
+
+答案近乎文字游戏：**因为没有线程可挂。** ThreadLocal 的键是线程——请求 A 在线程 1、请求 B 在线程 2，上下文靠"地址不同"互不串门。第 2 章把这个键抽走了：Node 里 A、B、C 三个请求跑在同一根线程上，回调轮流登场。单线程世界里，"线程"不是空间，而是时间片——不能用一个共享舞台当键，去区分"此刻正在演哪出戏"。键必须比舞台更细：这段台词属于哪出戏的哪一幕——也就是因果。这就是 15.2 给"异步操作"而不是给"执行者"发身份证的原因：asyncId 是戏号，triggerAsyncId 是幕号。
+
+镜子现成：ThreadLocal 在线程池世界里自己也会塌。线程池复用线程——线程跑完任务 A 不退场，转头接任务 B；A 留在 ThreadLocal 里的现场若没人清理，B 就继承了 A 的身份。日志串号、用户串数据，是 Java 世界最经典的事故流派之一；后来的补丁方案（如 TransmittableThreadLocal）核心动作只有一个：任务提交时捕获上下文、执行前恢复——与 15.5 的三幕一字不差，与 15.3.1 AsyncResource 的补证动作一字不差。**线程世界在池化的逼迫下，把因果链的路走了一半；Node 因为没有线程，一出发就站在这条路的终点。**
+
+再算一笔代价账。给每个异步资源签发身份证是一种税：async_hooks 全量插桩，吞吐可见下降、内存可见上涨——15.3 的三笔账决定了它的定位：诊断地基，不进热路径。ALS 之所以敢默认常驻，是因为第二代实现不再逐次查族谱，而是把帧直接挂进延续体，开销趋近于零。**税由观察者缴纳，通勤者免费**——这个分工，是 Node 能"默认提供上下文而不拖慢默认性能"的原因。
+
+从镜子回头看本章的起点：ThreadLocal 的"域"挂在空间上（线程），ALS 的"域"挂在因果上（异步子树）。空间会被复用、会串；因果不会。**把身份挂在因果上，而不是挂在执行者上**——这一招在单线程世界成立，在线程池世界同样成立，这正是它能成为通用答案的原因。
+
+## 15.11 生产案例：消失的 traceId
+
+某多租户 SaaS，半夜工单：租户导出失败，报错含糊。值班工程师打开日志系统，按请求的 traceId 检索——链条断在半路：API 层有日志、任务提交处有日志，"异步任务执行"之后一片空白。没有日志，排障只能读代码，一单故障排查到天亮。
+
+**第一步，还原现场。** 导出任务走进程内任务队列：请求回调把任务塞进队列，常驻分发器用 setTimeout 取任务执行。注意这个形状——它正好踩中 15.5 断点清单的第二条：分发器的异步资源在进程启动时就已创建，"护照签发日"早于任何请求；任务回调执行时，换入的是启动现场，请求的 store 从未到场。**traceId 不是丢的，是从没上过车。**
+
+**第二步，修复。** 两个动作。其一，补证：任务入队时用 AsyncResource 包一层（15.3.1 的标准姿势），回调从此继承"入队那一刻"的因果；其二，建域：请求入口用 `als.run({ traceId, tenantId }, ...)` 划域，日志函数统一从 getStore 读取。上线后 grep 一个 traceId，请求的一生重新完整。
+
+事故本可到此为止，但同样的根因在另一个服务里有更凶的变体。该服务的鉴权中间件图省事，把"当前租户"挂在一个模块级共享对象上：请求 A 进来写 tenant=A；A 还没跑完，请求 B 进来覆写成 tenant=B；A 的回调从 await 处回来，读到的是 B——**租户 A 的页面上，返回了租户 B 的数据**。这不是排障效率问题，是越权事故。它的机制正是 15.10 那面 ThreadLocal 镜子的翻版：执行者被复用，挂在执行者上的身份就会串。修复同样是把 tenantId 移进 store、入口 run 划域——42 与 43 的域边界是两棵异步子树，物理上互不可达。
+
+两起事故，一轻一重，夹住同一个结论：**上下文必须住在因果上，而不是任何共享的执行者上**——不在线程上（没有线程），不在池上（会复用），不在模块全局变量上（会串）。唯一不复用、不串门的那栋房子，就是那条因果子树本身。
+
+## 15.12 本质小结
 
 > **一句话本质**：async_hooks 给每个异步资源发出生证明（asyncId + triggerAsyncId），织成一张因果族谱；AsyncLocalStorage 把"当前上下文"附着在这张族谱（或更高效的延续体帧）上，以"捕获于创建、休眠于等待、换入于执行"三幕自动传播，多个实例各自维护独立因果链；而容器边界（线程、进程）是它唯一的墙——穿墙靠"显式携带 + 对岸重新 run"。
 
