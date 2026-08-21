@@ -13,6 +13,8 @@ node server.js
 ```js
 // server.js
 const http = require('http');
+const fs = require('fs');
+
 http.createServer((req, res) => {
   fs.readFile('./greeting.txt', (err, data) => {
     res.end(data);

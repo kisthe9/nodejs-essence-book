@@ -143,14 +143,14 @@ function log(msg) {
 要点：
 
 1. **EventEmitter = 回调字典 + 同步 for 循环**——无队列无调度；emit 返回时监听器已全部执行完。
-2. **异步在"何时触发"，同步在"如何分发**"——两层分清，执行顺序不再神秘。
+2. **异步在"何时触发"，同步在"如何分发"**——两层分清，执行顺序不再神秘。
 3. **'error' 无监听即 throw、即崩溃**——快速失败设计；长期存活的 emitter 必挂 error 监听。
 4. **事件是喇叭不是信箱**——不存历史，emit 时没人听就永远错过（once/queueing 需自建）。
 5. **异步边界会弄丢上下文**——asyncId 链是观测地基，AsyncLocalStorage 是应用层标准解法。
 
 ## 下一章引子
 
-到这里，七个零件全部到齐：V8 执行、Binding 破壁、事件循环心跳、双路 I/O、fd 通道、Buffer 载体、Stream 流动、EventEmitter 分发。
+到这里，前三部的零件全部到齐：V8 执行、Binding 破壁、事件循环心跳、双路 I/O、fd 通道、Buffer 载体、Stream 流动、EventEmitter 分发。
 
 但零件不会自己变成机器。谁在启动时把它们逐一装配？`process` 这个无处不在的对象到底是谁造的？"一个 Node.js 实例"在 C++ 层面对应什么实体？
 

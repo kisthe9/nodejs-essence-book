@@ -6,7 +6,7 @@
 |------|-----------|------|
 | Isolate | V8 的独立实例：独立堆、独立 GC，同一时刻只允许一个线程进入 | 第 1 章 |
 | Context | Isolate 内的一套全局环境；vm 沙箱的基础 | 第 1 章 |
-| Ignition / TurboFan | V8 的解释器 / 热点优化编译器 | 第 1 章 |
+| Ignition / Sparkplug / Maglev / TurboFan | V8 分层编译管线：解释器 / 直译基线 / 中层优化 / 顶层优化编译器 | 第 1 章 |
 | STW（Stop-The-World） | GC 暂停 JS 执行的时刻，直接计入请求延迟 | 第 1 章 |
 | internalBinding | 内置 JS 模块获取 C++ 能力的唯一通道，用户代码不可见 | 第 2 章 |
 | BaseObject | JS 对象与 C++ 对象一对一双向绑定的地基类 | 第 2 章 |
@@ -19,7 +19,7 @@
 | uv_run 三模式 | DEFAULT 转到没活 / ONCE 转一圈可阻塞 / NOWAIT 转一圈不阻塞；Node 用 DEFAULT | 第 3 章 |
 | epoll | Linux 的 I/O 多路复用机制：成本只与就绪事件数相关 | 第 4 章 |
 | EAGAIN | 非阻塞 fd "暂时无数据"的返回码；边缘触发下读到它才停 | 第 4 章 |
-| 线程池 | libuv 默认 4 线程，替主线程执行阻塞操作（文件/DNS/部分crypto） | 第 4 章 |
+| 线程池 | libuv 默认 4 线程，替主线程执行阻塞操作（文件/DNS/部分 crypto） | 第 4 章 |
 | fd | 进程私有的整数号码牌，指向内核 struct file | 第 5 章 |
 | inode | 内核中资源的本体；socket/pipe 的 inode 是内存匿名对象 | 第 5 章 |
 | SCM_RIGHTS | 通过 Unix 域套接字把 fd 传给另一个进程的机制 | 第 5 章 |

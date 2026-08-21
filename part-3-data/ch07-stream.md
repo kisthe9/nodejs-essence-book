@@ -103,6 +103,7 @@ JS: pause()
 for (const chunk of chunks) dest.write(chunk);   // 全部堆进内部缓冲区
 
 // 正确姿势
+const { once } = require('events');
 for (const chunk of chunks) {
   if (!dest.write(chunk)) {
     await once(dest, 'drain');   // 等缓冲排空再继续

@@ -66,6 +66,7 @@ CPU 密集用 Worker，而 Web 服务的诉求不同：请求本身是 I/O 密�
 
 ```js
 const cluster = require('cluster');
+const http = require('http');
 const os = require('os');
 
 if (cluster.isPrimary) {
