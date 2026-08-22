@@ -23,8 +23,8 @@ C = dict(
 
 def svg_open(w, h):
     return (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
-        f'viewBox="0 0 {w} {h}" font-family="{SANS}">\n<defs>\n'
+        f'<svg xmlns="http://www.w3.org/2000/svg" '
+        f'viewBox="0 0 {w} {h}" width="800" height="{round(h * 800 / w)}" font-family="{SANS}">\n<defs>\n'
         f'<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">'
         f'<path d="M1,1 L8,4 L1,7" fill="none" stroke="{C["ink2"]}" stroke-width="1.5"/></marker>\n'
         f'<marker id="ara" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">'
